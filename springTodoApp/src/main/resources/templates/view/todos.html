@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>TodoList</title>
+</head>
+<body>
+<div align="center">
+<a href="/new">Create new Todo</a>
+<table border="1">
+<thead>
+<tr>
+<th>Id</th>
+<th>Actiepunt</th>
+<th>Eind datum</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="todo : ${listTodos}">
+<td th:text="${todo.id}">Todo ID</td>
+<td th:text="${todo.actiepunt}">Actiepunt</td>
+<td th:text="${#dates.format(new java.util.Date(todo.einddatum), 'yyyy-mm-dd')}"></td>
+<td><a th:href="@{/edit/{id}(id=${todo.id})}">Edit</a></td>
+<td><a th:href="@{/delete/{id}(id=${todo.id})}">Delete</a></td>
+<td th:select path="status" items="${chooseableStatus}" itemValue="status" itemLabel="name"></td>
+</tr>
+ <tr>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>
