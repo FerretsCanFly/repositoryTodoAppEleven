@@ -2,11 +2,11 @@
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//
 //import org.junit.jupiter.api.Test;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 //import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.json.JacksonTester;
@@ -19,19 +19,17 @@
 //import eleven.opdracht.Repo.TodoRepo;
 //import eleven.opdracht.controller.TodoController;
 //
-//@SpringBootTest
-//@WebMvcTest(controllers = TodoController.class)
+//@DataJpaTest
 //class TodoControllerTest {
-//
 //	
-////	@Autowired
-////    private MockMvc mockMvc;
-////	
-////	 @Mock
-////	 private TodoRepo todoRepo;
-////	 
-////	    @InjectMocks
-////	    private TodoController todoController;
+//	@Autowired
+//    private MockMvc mockMvc;
+//	
+//	 @Mock
+//	 private TodoRepo todoRepo;
+//	 
+//	    @InjectMocks
+//	    private TodoController todoController;
 //	    
 //	    
 //	@Test

@@ -13,10 +13,13 @@ import java.util.Optional;
 @Service
 @Transactional
 public class TodoServiceImpl implements TodoService{
-
-	@Autowired 
 	private TodoRepo todoRepo;
-	
+
+	@Autowired
+	public TodoServiceImpl(TodoRepo todoRepo) {
+		this.todoRepo = todoRepo;
+	}
+
 	@Override
 	public List<Todo> getAllTodos() {
 		return (List<Todo>) todoRepo.findAll();
@@ -24,16 +27,24 @@ public class TodoServiceImpl implements TodoService{
 
 	@Override
 	public Todo save(final Todo todo) {
-	return todoRepo.save(todo);		
+		return todoRepo.save(todo);		
 	}
 
 	@Override
 	public Optional<Todo> getById(Long id) {
-	return todoRepo.findById(id);		
+		return todoRepo.findById(id);		
 	}
 
 	@Override
 	public void delete(Todo todo) {
 		todoRepo.delete(todo);	
+	}
+
+	public TodoRepo getTodoRepo() {
+		return todoRepo;
+	}
+
+	public void setTodoRepo(TodoRepo todoRepo) {
+		this.todoRepo = todoRepo;
 	}
 }

@@ -7,5 +7,4 @@ import eleven.opdracht.model.Todo;
 
 @Repository
 public interface TodoRepo extends JpaRepository<Todo, Long>{
-
 }
