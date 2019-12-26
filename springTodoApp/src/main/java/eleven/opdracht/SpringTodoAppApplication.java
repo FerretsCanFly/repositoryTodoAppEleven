@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * gegevens gewist en begint de gebruiker weer met een lege lijst aan actiepunten (m.u.v. de 2 voorbeeld queries die worden aangemaakt via data.sql).
  * Het is mogelijk om via application.propertiesde database gegevens op te slaan zodat wijzigingen de herstart van het programma overleven. Helaas geen tijd
  * meer gehad om dit werkend te krijgen.
- * Gebruikersdocumentatie is meegestuurd in de file Gebruikersdocumentatie SpringTodoApp.odt.
+ * Gebruikersdocumentatie is meegestuurd in de file Gebruikersdocumentatie SpringTodoApp.docx.
  * Geen tijd meer gehad om TodoControllerTest class werkend te krijgen, daarom gecomment. 3 kleine Tests in TodoRepoTest geschreven om er toch wat mee te oefenen en
  * in ieder geval een paar werkende tests te hebben in het programma.
  */

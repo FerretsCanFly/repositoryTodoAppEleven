@@ -16,7 +16,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 /**
  * Todo Entiteitsklasse. Bevat alle eigenschappen van het Todo object. Actiepunt status is by default false, 
  * wat wordt weergegeven als tekst 'Onvoltooid' in overzicht.
- * @author Suzy
+ * @author Suzy Margaretha
  *
  */
 @Entity
@@ -37,25 +37,13 @@ public class Todo {
 
 	private String prio;
 
-	private boolean statusDone = false;
+	private boolean statusDone = false; //Nieuw aangemaakt actiepunt begint met de status Onvoltooid (statusDone = false)
 
-	private String statusDoneAsString;
+	private String statusDoneAsString; //Voor weergave van status als Voltooid of Onvoltooid
 
 	public Todo() {
 		super();
 	}
-
-	//	//Dit zou ik graag anders organiseren zodat ik niet zoveel losse variabelen via de constructor mee geef. 
-	//	public Todo(long id, String actiepunt, LocalDate einddatum, String gebruiker, boolean statusDone, String statusDoneAsString, String prio) {
-	//		super();
-	//		this.id = id;
-	//		this.actiepunt = actiepunt;
-	//		this.einddatum = einddatum;
-	//		this.gebruiker = gebruiker;
-	//	//	this.statusDone = statusDone;
-	//	//	this.statusDoneAsString = statusDoneAsString; 
-	//		this.prio = prio;
-	//	}
 
 	public Todo(long id, String actiepunt, LocalDate einddatum, String gebruiker, String prio) {
 		super();
@@ -104,7 +92,6 @@ public class Todo {
 	}
 
 	public void setStatusDone(boolean statusDone) {
-
 		this.statusDone = statusDone;
 	}
 
@@ -120,11 +107,12 @@ public class Todo {
 	//Boolean wordt op true gezet na drukken van de knop
 	public String getStatusDoneAsString() {
 		if (statusDone) {
-			return "Voltooid";
+			statusDoneAsString = "Voltooid";
 		}
 		else {
-			return "Onvoltooid";
-		}		
+			statusDoneAsString = "Onvoltooid";
+		}	
+		return statusDoneAsString ;
 	}
 
 	public void setStatusDoneAsString(String statusDoneAsString) {

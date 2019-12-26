@@ -2,16 +2,10 @@ package eleven.opdracht;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import javax.activation.DataSource;
-import javax.persistence.EntityManager;
-
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import eleven.opdracht.Repo.TodoRepo;
 import eleven.opdracht.model.Todo;
@@ -30,17 +24,43 @@ class TodoRepoTest {
 		assertThat(todos).hasSize(nOfTodos);
 	}
 
-	//Controleert of item met actiepunt test is aangemaakt
+	//Controleert of item met actiepunt test is aangemaakt. Database beging met 2 voorbeeld actiepunten. Na test zouden er 3 items moeten bestaan.
 	@Test
 	public void testSaveToRepo()  {
 		Todo todo = new Todo();
-		todo.setActiepunt("test"); 
-		todo.setGebruiker("Piet"); 
+		todo.setActiepunt("Actiepunt test"); 
+		todo.setGebruiker("Pete"); 
 		todoRepo.save(todo);
-		assertThat(todo.getId()).isNotNull();
-		assertThat(todo.getActiepunt()).isEqualTo("test");
-		assertThat(todo.getGebruiker()).isEqualTo("Piet");
+
+		Iterable<Todo> todos = todoRepo.findAll();
+		int nOfTodos = 3; 
+		assertThat(todos).hasSize(nOfTodos);
+		assertThat(todo.getActiepunt()).isEqualTo("Actiepunt test");
+		assertThat(todo.getGebruiker()).isEqualTo("Pete");
 	}	  
+	
+	//Controleert of actiepunt succesvol is gewijzigd
+		@Test
+		public void testUpdateRepo()  {
+			Iterable<Todo> todos = todoRepo.findAll();
+			int nOfTodos = 2;
+			long testUpdateId = 1;
+			Todo todo = todoRepo.getOne(testUpdateId);
+			System.out.println(todo.getActiepunt());
+			//Sla de waarden voor actiepunt en gebruiker op in een variabele die we kunnen vergelijken met de nieuwe waarden
+			String actiepuntOud = todo.getActiepunt();
+			String gebruikerOud = todo.getGebruiker();
+			long idOud = todo.getId();
+			
+			todo.setActiepunt("Actiepunt nieuw test"); 
+			todo.setGebruiker("Gebruiker nieuw test"); 
+			
+			assertThat(todo.getActiepunt()).isNotEqualToIgnoringCase(actiepuntOud);
+			assertThat(todo.getActiepunt()).isNotEqualToIgnoringCase(gebruikerOud);
+			assertThat(todo.getId() == idOud);
+			assertThat(todos).hasSize(nOfTodos);	
+			todoRepo.save(todo);
+		}	  
 	
 	//Bij aanmaken van Todo is de boolean statusDone false en moet de tekst Onvoltooid achter het actiepunt staan. 
 	//Wanneer statusDone op true wordt gezet moet de tekst achter het actiepunt in Voltooid veranderen

@@ -21,6 +21,11 @@ public class TodoServiceImpl implements TodoService{
 	}
 
 	@Override
+	public Optional<Todo> getById(Long id) {
+		return todoRepo.findById(id);		
+	}
+
+	@Override
 	public List<Todo> getAllTodos() {
 		return (List<Todo>) todoRepo.findAll();
 	}
@@ -31,8 +36,8 @@ public class TodoServiceImpl implements TodoService{
 	}
 
 	@Override
-	public Optional<Todo> getById(Long id) {
-		return todoRepo.findById(id);		
+	public Todo update(Todo todo) {
+		return todoRepo.saveAndFlush(todo);
 	}
 
 	@Override

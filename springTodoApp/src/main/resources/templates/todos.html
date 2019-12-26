@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>TodoList</title>
+</head>
+<body>
+	<div align="center">
+		<a href="/new">Nieuw actiepunt aanmaken</a>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Actiepunt</th>
+					<th>Einddatum</th>
+					<th>Gebruiker</th>
+					<th>Prioriteit</th>
+					<th>Status</th>
+					<th>Edit</th>
+					<th>Delete</th>
+					<th>Voltooid?</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="todo : ${listTodos}">
+					<td th:text="${todo.id}">Todo ID</td>
+					<td th:text="${todo.actiepunt}">Actiepunt</td>
+					<td th:text="${#temporals.format(todo.einddatum, 'dd-MM-yyyy')}">Datum</td>
+					<td th:text="${todo.gebruiker}">Gebruiker</td>
+					<td th:text="${todo.prio}">Gebruiker</td>
+					<td th:text="${todo.statusDoneAsString}">StatusAlsString</td>
+					<td><a th:href="@{/edit/{id}(id=${todo.id})}">Edit</a></td>
+					<td><a th:href="@{/delete/{id}(id=${todo.id})}">Delete</a></td>
+					<td><a th:href="@{/wijzigStatus/{id}(id=${todo.id})}">Ja</a></td>
+				</tr>
+				<tr>
+				</tr>
+			</tbody>
+		</table>
+		<div margin="50px">
+			<a href="/shutdown-app">Exit</a>
+		</div>
+	</div>
+</body>
+</html>

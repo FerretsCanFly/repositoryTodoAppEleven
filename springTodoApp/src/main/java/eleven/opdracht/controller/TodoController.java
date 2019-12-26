@@ -2,6 +2,8 @@ package eleven.opdracht.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import eleven.opdracht.Service.TodoServiceImpl;
 import eleven.opdracht.model.Todo;
 /**
  * Via verschillende knoppen in het hoofdmenu kan de gebruiker het actiepunt wijzigen, verwijderen, de status veranderen, of een nieuw actiepunt maken.
+ * Prioriteit is aan te passen via de 'Edit' knop van het actiepunt.
  * @author Suzy
  */
 @Controller
@@ -28,11 +31,11 @@ public class TodoController {
 	}
 
 	//Haalt een lijst op van alle actiepunten en geeft het weer in het hoofdmenu
-	@GetMapping(path ="/view/todos")
+	@GetMapping(path ="/todos")
 	public String viewFirstPage(Model model) {
 		List<Todo> listTodos = todoServiceImpl.getAllTodos();
 		model.addAttribute("listTodos", listTodos);
-		return "/view/todos";		 
+		return "/todos";		 
 	}
 
 	//Door te klikken op 'Nieuw actiepunt maken' komt gebruiker in het scherm om een nieuw actiepunt te maken
@@ -40,24 +43,32 @@ public class TodoController {
 	public String showNewTodoForm(Model model) {
 		Todo todo = new Todo();
 		model.addAttribute("todo", todo);
-		return "view/addTodo"; 
+		return "/addTodo"; 
 	}
 
 	//Opslaan van wijziging of nieuw actiepunt en navigeert terug naar het hoofdmenu 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveTodo(@ModelAttribute("todo") Todo todo) {
 		todoServiceImpl.save(todo);	
-		return "redirect:/view/todos";
-	}
+		return "redirect:/todos";
+	}	
+
+	//Actiepunt bewerken en opslaan
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	public String updateTodo(@PathVariable("id") long id, Model model, @Valid Todo todo) {	
+		todoServiceImpl.update(todo);
+		model.addAttribute("todos", todoServiceImpl.getAllTodos());
+		return "redirect:/todos";
+	}	
 
 	//Door te klikken op 'Edit' komt gebruiker in het scherm om een actiepunt te wijzigen. Wijzigen van het Id zorg dat het actiepunt met dat Id wordt gewijzigd.
 	//Todo: Id van actiepunt doorgeven zonder dat gebruiker het kan aanpassen, zodat alleen het actiepunt waarvoor op 'Edit' is geklikt gewijzigd wordt. 
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		Todo todo = todoServiceImpl.getById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));	     
+				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));	
 		model.addAttribute("todo", todo);
-		return "view/editTodo";
+		return "/editTodo";
 	}
 
 	//Verwijder het actiepunt waar de 'Delete' knop voor is ingedrukt
@@ -67,7 +78,7 @@ public class TodoController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		todoServiceImpl.delete(todo);
 		model.addAttribute("todos", todoServiceImpl.getAllTodos());
-		return "redirect:/view/todos";
+		return "redirect:/todos";
 	}
 
 	//Wijzigt het status overzicht van 'Onvoltooid' naar 'Voltooid'. Status kan alleen via deze knop worden aangepast
@@ -76,8 +87,16 @@ public class TodoController {
 		Todo todo = todoServiceImpl.getById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		todo.setStatusDone(true); //Wanneer getStatusDoneAsString wordt geroepen geeft het de tekst Voltooid terug indien true, anders de tekst Onvoltooid
-		todoServiceImpl.save(todo);
+		todoServiceImpl.update(todo);
 		model.addAttribute("todos", todoServiceImpl.getAllTodos());
-		return "redirect:/view/todos";
+		return "redirect:/todos";
 	}
+
+	//Applicatie afsluiten
+	@GetMapping(path ="/shutdown-app")
+	public void exitProgram(Model model) {
+		int exitCode = 0;
+		System.exit(exitCode); 
+	}
+
 }

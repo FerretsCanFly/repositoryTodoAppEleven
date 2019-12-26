@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Todo toevoegen</title>
+</head>
+<body>
+	<div align="center">
+		<form action="#" th:action="@{/save}" th:object="${todo}"
+			method="post">
+			<table border="0" cellpadding="10">
+				<tr>
+				<tr>
+					<td>Nieuw Actiepunt:</td>
+					<td><input type="text" th:field="*{actiepunt}"
+						required='required' /></td>
+				</tr>
+				<tr>
+					<td>Einddatum:</td>
+					<td><input type="date" th:field="*{einddatum}"
+						required='required' /></td>
+				</tr>
+				<tr>
+					<td>Gebruiker:</td>
+					<td><input type="text" th:field="*{gebruiker}"
+						required='required' /></td>
+				</tr>
+				<tr>
+					<td>Prioriteit:</td>
+					<td><select th:field="*{prio}">
+							<option value="Hoog">Hoog</option>
+							<option value="Laag">Laag</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td colspan="2"><button type="submit">Save</button>
+					<td><input onclick='javascript:window.history.back()'
+						value='Back' type='button' /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

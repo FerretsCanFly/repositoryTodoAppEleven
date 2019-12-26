@@ -2,43 +2,49 @@
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+//
+//import java.util.Arrays;
+//import java.util.List;
+//
 //import org.junit.jupiter.api.Test;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.boot.test.json.JacksonTester;
+//import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.test.web.servlet.MockMvc;
-//import static org.hamcrest.Matchers.containsString;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 //
-//import org.aspectj.lang.annotation.Before;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 //
 //import eleven.opdracht.Repo.TodoRepo;
+//import eleven.opdracht.Service.TodoService;
 //import eleven.opdracht.controller.TodoController;
+//import eleven.opdracht.model.Todo;
 //
 //@DataJpaTest
 //class TodoControllerTest {
 //	
-//	@Autowired
-//    private MockMvc mockMvc;
-//	
-//	 @Mock
-//	 private TodoRepo todoRepo;
+//	 @Autowired
+//	    private MockMvc mockMvc;
 //	 
-//	    @InjectMocks
-//	    private TodoController todoController;
+//		@Autowired
+//		TodoRepo todoRepo;
+//	 
+//	    @MockBean
+//	    private TodoService service;
+//	 
 //	    
-//	    
-//	@Test
-//	public void testViewFirstPage() throws Exception {
-//		this.mockMvc.perform(get("/view/todos"))
-//		   .andExpect(status().isOk())
-//		   .andExpect(content().string(containsString("Mijn eerste actiepunt")));
-//	}
+//	    @MockBean
+//	    Todo todo;
 //
+//	@Test
+//	void testViewFirstPage() throws Exception {
+//		this.mockMvc.perform(get("/todos"))
+//	      .andExpect(status().isOk());
+//	}
+//	
 //	@Test
 //	void testShowNewTodoForm() {
 //		fail("Not yet implemented");
@@ -50,12 +56,22 @@
 //	}
 //
 //	@Test
+//	void testUpdateTodo() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
 //	void testShowUpdateForm() {
 //		fail("Not yet implemented");
 //	}
 //
 //	@Test
-//	void testDeleteUser() {
+//	void testDeleteTodo() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	void testWijzigTodo() {
 //		fail("Not yet implemented");
 //	}
 //
