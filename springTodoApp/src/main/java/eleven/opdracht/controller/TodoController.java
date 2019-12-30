@@ -31,30 +31,30 @@ public class TodoController {
 	}
 
 	//Haalt een lijst op van alle actiepunten en geeft het weer in het hoofdmenu
-	@GetMapping(path ="/todos")
+	@GetMapping(path ="todos")
 	public String viewFirstPage(Model model) {
 		List<Todo> listTodos = todoServiceImpl.getAllTodos();
 		model.addAttribute("listTodos", listTodos);
-		return "/todos";		 
+		return "todos";		 
 	}
 
 	//Door te klikken op 'Nieuw actiepunt maken' komt gebruiker in het scherm om een nieuw actiepunt te maken
-	@RequestMapping("/new")
+	@RequestMapping("new")
 	public String showNewTodoForm(Model model) {
 		Todo todo = new Todo();
 		model.addAttribute("todo", todo);
-		return "/addTodo"; 
+		return "addTodo"; 
 	}
 
 	//Opslaan van wijziging of nieuw actiepunt en navigeert terug naar het hoofdmenu 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String saveTodo(@ModelAttribute("todo") Todo todo) {
 		todoServiceImpl.save(todo);	
 		return "redirect:/todos";
 	}	
 
 	//Actiepunt bewerken en opslaan
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "update/{id}", method = RequestMethod.POST)
 	public String updateTodo(@PathVariable("id") long id, Model model, @Valid Todo todo) {	
 		todoServiceImpl.update(todo);
 		model.addAttribute("todos", todoServiceImpl.getAllTodos());
@@ -63,16 +63,16 @@ public class TodoController {
 
 	//Door te klikken op 'Edit' komt gebruiker in het scherm om een actiepunt te wijzigen. Wijzigen van het Id zorg dat het actiepunt met dat Id wordt gewijzigd.
 	//Todo: Id van actiepunt doorgeven zonder dat gebruiker het kan aanpassen, zodat alleen het actiepunt waarvoor op 'Edit' is geklikt gewijzigd wordt. 
-	@GetMapping("/edit/{id}")
+	@GetMapping("edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		Todo todo = todoServiceImpl.getById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));	
 		model.addAttribute("todo", todo);
-		return "/editTodo";
+		return "editTodo";
 	}
 
 	//Verwijder het actiepunt waar de 'Delete' knop voor is ingedrukt
-	@GetMapping("/delete/{id}")
+	@GetMapping("delete/{id}")
 	public String deleteTodo(@PathVariable("id") long id, Model model) {
 		Todo todo = todoServiceImpl.getById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
@@ -82,7 +82,7 @@ public class TodoController {
 	}
 
 	//Wijzigt het status overzicht van 'Onvoltooid' naar 'Voltooid'. Status kan alleen via deze knop worden aangepast
-	@GetMapping("/wijzigStatus/{id}")
+	@GetMapping("wijzigStatus/{id}")
 	public String wijzigTodo(@PathVariable("id") long id, Model model) {
 		Todo todo = todoServiceImpl.getById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));

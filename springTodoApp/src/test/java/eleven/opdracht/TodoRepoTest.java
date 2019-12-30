@@ -24,7 +24,7 @@ class TodoRepoTest {
 		assertThat(todos).hasSize(nOfTodos);
 	}
 
-	//Controleert of item met actiepunt test is aangemaakt. Database beging met 2 voorbeeld actiepunten. Na test zouden er 3 items moeten bestaan.
+	//Controleert of item met actiepunt test is aangemaakt. Database begint met 2 voorbeeld actiepunten. Na test zouden er 3 items moeten bestaan.
 	@Test
 	public void testSaveToRepo()  {
 		Todo todo = new Todo();
